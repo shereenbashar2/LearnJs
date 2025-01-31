@@ -1,0 +1,32 @@
+function fetchRandomUserDataPromise() {
+    return fetch('https://randomuser.me/api/')
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            const user = data.results[0];
+            return {
+                name: `${user.name.first} ${user.name.last}`,
+                email: user.email,
+            };
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+
+function displayUserDataPromise() {
+    fetchRandomUserDataPromise()
+        .then((userData) => {
+            console.log('Promises - Name: ' + userData.name);
+            console.log('Promises - Email: ' + userData.email);
+        })
+        .catch((error) => {
+            console.error('Promises - Error:', error);
+        });
+}
+// Call the function to display user data using Promises.
+displayUserDataPromise();
